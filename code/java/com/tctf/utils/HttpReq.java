@@ -37,16 +37,25 @@ public class HttpReq {
         if(endWithImg(urlString)) {
             try {
                 URL url = new URL(urlString);
+                if(urlString.contains("file://")){
+                    throw new Exception("error");
+                }
                 URLConnection urlConnection = url.openConnection();
                 urlConnection.setReadTimeout(5*1000);
                 InputStream is = urlConnection.getInputStream();
                 byte[] bs = new byte[1024];
                 int len;
+                int count = 0;
                 filename = generateRamdonFilename(getFileSufix(urlString));
                 String outfilename = path + filename;
                 OutputStream os = new FileOutputStream(outfilename);
                 while ((len = is.read(bs)) != -1) {
-                    os.write(bs, 0, len);
+                    count = count + 1;
+                    if(count >5) {
+                        os.write(bs, 0, len);
+                    }else{
+                        throw new Exception("file too large");
+                    }
                 }
                 os.close();
                 is.close();

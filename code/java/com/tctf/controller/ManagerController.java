@@ -61,6 +61,7 @@ public class ManagerController {
         try {
             if (user.getIsadmin()) {
                 Post post = redisClient.getObject(pid);
+                //redisClient.getObject(pid);
                 model.addAttribute("post", post);
                 return "manager";
             }

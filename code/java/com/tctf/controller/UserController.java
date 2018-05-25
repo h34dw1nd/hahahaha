@@ -48,7 +48,7 @@ public class UserController {
 
     @RequestMapping(value = "/headimg.do",method = RequestMethod.GET)
     public void UpdateHead(@RequestParam("url")String url){
-        String downloadPath = request.getSession().getServletContext().getRealPath("/")+"headimg/";
+        String downloadPath = request.getSession().getServletContext().getRealPath("/")+"/headimg/";
         String headurl = "/headimg/"+ HttpReq.Download(url,downloadPath);
         User user = (User) session.getAttribute("user");
         Integer uid = user.getId();
